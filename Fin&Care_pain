@@ -1,0 +1,40 @@
+/* The following code was written to assess the association between pain in the last week of life, financial status, and access to care. */
+clear all
+cd X
+use X
+** demographics 
+generate Fin_r = Fin_D
+label values Fin_r Fin_r
+replace Fin_r = 4 if Fin_r == 5
+**clinical demographics
+generate CoD_r2 = CoD_cat
+label values CoD_r2 CoD_r2
+replace CoD_r2 = 2 if CoD_r2 == 3
+replace CoD_r2 = 3 if CoD_r2 == 4 | CoD_r2 == 5 | CoD_r2 == 6
+replace CoD_r2 = 4 if CoD_r2 == 7 | CoD_r2 == 8
+replace CoD_r2 = 5 if CoD_r2 == 9
+replace CoD_r2 = 6 if CoD_r2 == 10
+**labelling variables
+label define  Fin_r 4 "Finding it difficult", modify
+label define  CoD_r2 1 "Cancer", modify
+label define  CoD_r2 2 "Cardiovascular disease", modify
+label define  CoD_r2 3 "Organ failure", modify
+label define  CoD_r2 4 "Neurological disease", modify
+label define  CoD_r2 5 "Other", modify
+label define  CoD_r2 6 "Multiple disease", modify
+*regression model
+regres IPOS_pain Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access, robust
+*sensitivity analysis
+ologit IPOS_pain Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access
+logistic IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r2 i.CoD_r2 ib1.diff_access
+*mediation analysis
+regress diff_access i.Fin_r
+*moderation analysis
+codebook loc_1w_collapse
+drop if loc_1w_collapse ==5
+regres IPOS_pain Dec_age i.Gender_D_dich i.CoD_r2 ib1.diff_access i.Fin_r##i.loc_1w_collapse
+regres IPOS_pain Dec_age i.Gender_D_dich i.CoD_r ib1.diff_access c.Fin_r##i.loc_1w_collapse
+margins loc_1w_collapse, at(Fin_r=(1(1)4)) atmeans
+marginsplot, xtitle(Financial Status) ytitle("Predicted Margin") xlabel(, labsize(small)) title("Moderation Analysis")
+
+
