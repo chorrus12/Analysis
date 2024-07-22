@@ -25,7 +25,7 @@ label define  CoD_r2 6 "Multiple disease", modify
 ologit IPOS_pain Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access i.loc_1w_collapse, robust
 *sensitivity analysis
 regres IPOS_pain Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access i.loc_1w_collapse, robust
-logistic IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r2 i.CoD_r2 ib1.diff_access i.loc_1w_collapse
+logistic IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access i.loc_1w_collapse, robust
 *mediation analysis
 regress diff_access i.Fin_r
 *moderation analysis
