@@ -1,6 +1,5 @@
 /* The following code was written to assess the association between pain in the last week of life, financial status, and access to care. */
 clear all
-cd X
 use X
 ** demographics 
 generate Fin_r = Fin_D
@@ -25,8 +24,7 @@ label define  CoD_r2 6 "Multiple disease", modify
 *regression model
 regres IPOS_pain Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access, robust
 *sensitivity analysis
-ologit IPOS_pain Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access
-logistic IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r2 i.CoD_r2 ib1.diff_access
+ologit IPOS_pain Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access, robust
 *mediation analysis
 regress diff_access i.Fin_r
 *moderation analysis
