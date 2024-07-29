@@ -35,8 +35,20 @@ nestreg: poisson IPOS_pain_high (Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.di
 * E-value calculation
 matrix list e(b) 
 matrix list e(V) 
-local coef = 0.31645594
-local se = 0.1260128
+* E-value 'doing alright'
+local coef = 0.2072576
+local se = 0.0911507
 local e_value = abs(`coef') + sqrt(abs(`coef')^2 + 4 * `se'^2)
-display "E-value: " `e_value'
+display "E-value: " 'e_value'
+* E-value 'just getting by'
+local coef = 0.2952251
+local se = 0.1174043
+local e_value = abs(`coef') + sqrt(abs(`coef')^2 + 4 * `se'^2)
+display "E-value: " 'e_value'
+* E-value 'finding it difficult'
+local coef = 0.3164559
+local se = 0.1360128
+local e_value = abs(`coef') + sqrt(abs(`coef')^2 + 4 * `se'^2)
+display "E-value: " 'e_value'
+
 
