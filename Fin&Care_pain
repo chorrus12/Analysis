@@ -22,7 +22,7 @@ label define  CoD_r2 5 "Other", modify
 label define  CoD_r2 6 "Multiple disease", modify
 codebook loc_1w_collapse
 drop if loc_1w_collapse ==5
-*regression model
+*binary regression model
 poisson IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access ib3.loc_1w_collapse, vce(robust) irr
 *mediation analysis
 regress diff_access i.Fin_r
@@ -32,4 +32,11 @@ margins loc_1w_collapse, at(Fin_r=(1(1)4)) atmeans
 marginsplot, xtitle(Financial Status) ytitle("Predicted Margin") xlabel(, labsize(small)) title("Moderation Analysis")
 * moderation model fit analysis
 nestreg: poisson IPOS_pain_high (Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access ib3.loc_1w_collapse)(i.Fin_r##ib3.loc_1w_collapse), vce(robust) 
+* E-value calculation
+matrix list e(b) 
+matrix list e(V) 
+local coef = 0.31645594
+local se = 0.1260128
+local e_value = abs(`coef') + sqrt(abs(`coef')^2 + 4 * `se'^2)
+display "E-value: " `e_value'
 
