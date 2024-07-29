@@ -1,5 +1,4 @@
-/* The following code was written to assess the association between pain in the last week of life, financial status, and access to care. */
-clear all
+/* The following code was written to assess the association between pain in the last week of life and financial status
 use X
 ** demographics 
 generate Fin_r = Fin_D
@@ -21,16 +20,16 @@ label define  CoD_r2 3 "Organ failure", modify
 label define  CoD_r2 4 "Neurological disease", modify
 label define  CoD_r2 5 "Other", modify
 label define  CoD_r2 6 "Multiple disease", modify
+drop if loc_1w_collapse ==5
 *regression model
-poisson IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access i.loc_1w_collapse, vce(robust) irr
+poisson IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access ib3.loc_1w_collapse, vce(robust) irr
 *mediation analysis
 regress diff_access i.Fin_r
 *moderation analysis
 codebook loc_1w_collapse
-drop if loc_1w_collapse ==5
-logistic IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access i.loc_1w_collapse i.Fin_r##i.loc_1w_collapse, vce(robust)
+logistic IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access ib3.loc_1w_collapse i.Fin_r##ib3.loc_1w_collapse, vce(robust)
 margins loc_1w_collapse, at(Fin_r=(1(1)4)) atmeans
 marginsplot, xtitle(Financial Status) ytitle("Predicted Margin") xlabel(, labsize(small)) title("Moderation Analysis")
-* Moderation model fit analysis
-nestreg: logistic IPOS_pain_high (Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access i.loc_1w_collapse)(i.Fin_r##i.loc_1w_collapse), vce(robust) 
+* moderation model fit analysis
+nestreg: logistic IPOS_pain_high (Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access ib3.loc_1w_collapse)(ib3.Fin_r##i.loc_1w_collapse), vce(robust) 
 
