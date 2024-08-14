@@ -22,7 +22,7 @@ label define  CoD_r2 5 "Other", modify
 label define  CoD_r2 6 "Multiple disease", modify
 codebook loc_1w_collapse
 drop if loc_1w_collapse ==5
-*binary regression model
+*regression model
 poisson IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access ib3.loc_1w_collapse, vce(robust) irr
 *mediation analysis
 regress diff_access i.Fin_r
