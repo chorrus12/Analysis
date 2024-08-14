@@ -1,4 +1,4 @@
-/* The following code was written to assess the association between pain in the last week of life and financial status
+/* The following code was written to assess the association between pain burden in the last week of life and subjective financial status.
 use X
 ** demographics 
 generate Fin_r = Fin_D
