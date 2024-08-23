@@ -1,4 +1,4 @@
-/* The following code was written to assess the association between pain burden in the last week of life and subjective financial status.
+/* The following code was written to assess the association between how paing affected people in the last week of life and subjective financial status.
 use X
 ** demographics 
 generate Fin_r = Fin_D
@@ -20,7 +20,6 @@ label define  CoD_r2 3 "Organ failure", modify
 label define  CoD_r2 4 "Neurological disease", modify
 label define  CoD_r2 5 "Other", modify
 label define  CoD_r2 6 "Multiple disease", modify
-codebook loc_1w_collapse
 *regression model
 unadjusted: poisson IPOS_pain_high Dec_age, vce(robust) irr 
 unadjusted: poisson IPOS_pain_high Dec_age i.Gender_D_dich, vce(robust) irr 
@@ -31,6 +30,7 @@ Fully adjusted: poisson IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 
 *mediation analysis
 Step 1: regress diff_access i.Fin_r
 *moderation analysis
+codebook loc_1w_collapse
 drop if loc_1w_collapse ==5
 poisson IPOS_pain_high (Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access ib3.loc_1w_collapse) (i.Fin_r##ib3.loc_1w_collapse), vce(robust)
 margins loc_1w_collapse, at(Fin_r=(1(1)4)) atmeans
