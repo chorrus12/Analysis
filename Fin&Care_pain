@@ -41,19 +41,14 @@ nestreg: poisson IPOS_pain_high (Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.di
 matrix list e(b) 
 matrix list e(V) 
 * E-value 'doing alright'
-local coef = 0.2072576
-local se = 0.0911507
-local e_value = abs(`coef') + sqrt(abs(`coef')^2 + 4 * `se'^2)
-display "E-value: " 'e_value'
-* E-value 'just getting by'
-local coef = 0.2952251
-local se = 0.1174043
-local e_value = abs(`coef') + sqrt(abs(`coef')^2 + 4 * `se'^2)
-display "E-value: " 'e_value'
-* E-value 'finding it difficult'
-local coef = 0.3164559
-local se = 0.1360128
-local e_value = abs(`coef') + sqrt(abs(`coef')^2 + 4 * `se'^2)
-display "E-value: " 'e_value'
+search evalue_estat
+'doing alright'
+. evalue rr 1.204528, lcl(1.012079) ucl(1.433571)
+   E-value (point estimate): 1.701
+   E-value (CI): 1.123
+'just getting by'
+. evalue rr 1.311186, lcl(1.044125) ucl(1.646553)
+   E-value (point estimate): 1.950
+   E-value (CI): 1.259
 
 
