@@ -50,5 +50,11 @@ search evalue_estat
 . evalue rr 1.311186, lcl(1.044125) ucl(1.646553)
    E-value (point estimate): 1.950
    E-value (CI): 1.259
-
+*Subgroup post-hoc analysis
+drop if loc_1w_collapse ==1
+drop if loc_1w_collapse ==2
+drop if loc_1w_collapse ==3
+drop if loc_1w_collapse ==.
+codebook loc_1w_collapse
+poisson IPOS_pain_high Dec_age i.Gender_D_dich i.Fin_r i.CoD_r2 ib1.diff_access, vce(robust) irr
 
